@@ -1,10 +1,10 @@
 <?php
 
-namespace iProtek\Dbm;
+namespace iProtek\Pay;
 
 use Illuminate\Support\ServiceProvider;
 
-class DbmPackageServiceProvider extends ServiceProvider
+class PayPackageServiceProvider extends ServiceProvider
 {
     /**
      * Register any application services.
