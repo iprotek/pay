@@ -1,0 +1,73 @@
+
+body {
+    background-image:url('/images/building.jpg');
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+}
+.background-cover {
+    background-image:url('/images/building.jpg');
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+    position: fixed;
+    width: 100vh;
+    height: auto;
+}
+
+
+.bg-header{
+    background-image:url('/images/header.png');
+    height: 20vh;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+}
+.img-icon{
+    width: 100%;
+    margin: 5px;
+    -webkit-filter: drop-shadow(1px 1px 3px white) drop-shadow(-1px -1px 3px white);
+    filter: drop-shadow(1px 1px 3px white)  drop-shadow(-1px -1px 3px white);
+}
+.white-stroke{    
+    -webkit-filter: drop-shadow(1px 1px 3px white) drop-shadow(-1px -1px 3px white);
+    filter: drop-shadow(1px 1px 3px white)  drop-shadow(-1px -1px 3px white);
+}
+.img-icon-container{
+    min-height:100px; 
+    max-height: 100px;
+    display:flex; 
+    align-items:center;
+    position: relative;
+    
+}
+
+.bg-body{
+    background-image:url('/images/job-alert.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 100vh;
+
+}
+
+@font-face {
+    font-family: 'Bebas';
+    src: url('../fonts/BebasNeue-Regular.ttf') format('truetype');
+    /*
+    src: url('../fonts/BebasNeue-Regular.eot');
+    src: url('../fonts/fontawesome-webfont.eot') format('embedded-opentype'), 
+        url('../fonts/fontawesome-webfont.woff2') format('woff2'), 
+        url('../fonts/fontawesome-webfont.woff') format('woff'), 
+        url('../fonts/BebasNeue-Regular.ttf') format('truetype'), 
+        url('../fonts/fontawesome-webfont.svg') format('svg');*/
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Montserrat';
+    src:url('../fonts/montserrat/Montserrat-Light.otf') format('truetype');
+    
+    font-weight: normal;
+    font-style: normal;
+}

@@ -1,0 +1,16 @@
+
+/*SKILL LEVEL HOVER*/
+.hoverelement:hover + .hoverelement-hidden-container{
+    display: block;
+}
+.hoverelement-hidden-container{
+    display:none;
+    position:absolute;
+}
+.hoverelement-hidden-container:hover{
+    display:block;
+}
+
+.mouseno-event, .reloader-icon{
+    pointer-events: none;
+}

@@ -1,0 +1,35 @@
+{
+    "name": "iprotek/pay",
+    "description": "iProtek account management for payments",
+    "keywords": ["laravel", "plugin", "dbm"],
+    "authors": [
+        {
+            "name": "Joseph Aguilar",
+            "email": "admin@iprotek.net"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "iProtek\\Dbm\\": "src/"
+        }
+    },
+    "require": {
+        "php": ">=7.0.0",
+        "illuminate/support": "^8.0|^9.0|^10.0|^11.0|^12.0",
+        "textalk/websocket":"^1.5"
+    },
+    "type": "library",  
+    "license": "MIT", 
+    "require-dev": {
+    },
+    "suggest": {
+        "ext-intl": "Use for creating manual and automated data backup of iprotek system"
+    }, 
+    "extra": {
+        "laravel": {
+            "providers": [
+                "iProtek\\Pay\\PayPackageServiceProvider"
+            ]
+        }
+    }
+}

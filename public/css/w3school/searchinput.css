@@ -1,0 +1,35 @@
+input[type=text].w3searchbox {
+    width: 130px;
+    box-sizing: border-box;
+    border: 2px solid #ccc;
+    border-radius: 4px 0px 0px 4px;
+    font-size: 12px;
+    background-color: white;
+    background-image: url('searchicon.png');
+    background-position: 8px 5px; 
+    background-repeat: no-repeat;
+    padding: 8px 15px 8px 35px;
+    -webkit-transition: width 0.4s ease-in-out;
+    transition: width 0.4s ease-in-out;
+    margin: 2px;
+    line-height: 0px;    
+  }
+  input[type=text].w3searchbox:focus
+  {
+    width: 100%;
+  }
+.w3school-input-group{
+  width:100%;
+}
+
+.search-filter-btn{
+  border-radius:5px;
+  padding:2px 4px;
+  margin: 2px;
+}
+.search-filter-btn a{
+  color:red;
+}
+.search-filter-btn a:hover{
+  color:red;
+}

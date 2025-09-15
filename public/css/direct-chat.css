@@ -1,0 +1,28 @@
+  .left > .bg-danger::after, .left > .bg-danger::before {
+    border-right-color: #dc3545 !important;
+  }
+  .right > .bg-danger::after, .right > .bg-danger::before {
+    border-left-color: #dc3545 !important;
+  }
+
+  .left > .bg-warning::after, .left > .bg-warning::before{
+    border-right-color: #ffc107 !important;
+  }
+  .right > .bg-warning::after, .right > .bg-warning::before {
+    border-left-color: #ffc107 !important;
+  }
+
+
+  .left > .bg-primary::after, .left > .bg-primary::before{
+    border-right-color: #007bff !important;
+  }
+  .right > .bg-primary::after, .right > .bg-primary::before {
+    border-left-color: #007bff !important;
+  }
+
+  .left > .bg-success::after, .left > .bg-success::before{
+    border-right-color: #28a745 !important;
+  }
+  .right > .bg-success::after, .right > .bg-success::before {
+    border-left-color: #28a745 !important;
+  }

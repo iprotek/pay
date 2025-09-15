@@ -1,0 +1,27 @@
+
+    .star.rating {
+    display: inline-block;
+    }
+
+    .star.rating input {
+    display: none;
+    }
+
+    .star.rating label {
+    color: #ddd;
+    float: right;
+    cursor: pointer;
+    }
+
+    .star.rating label:before {
+    content: '\2605';
+    color: #ddd;
+    }
+
+    .star.rating input:checked ~ label {
+    color: gold;
+    }
+
+    .star.rating input:checked ~ label:before {
+    color: gold;
+    }
