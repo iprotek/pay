@@ -12,6 +12,9 @@
         "psr-4": {
             "iProtek\\Pay\\": "src/"
         }
+    },    
+    "conflict": {
+        "iprotek/core": "*"
     },
     "scripts": {
         "post-autoload-dump": [
