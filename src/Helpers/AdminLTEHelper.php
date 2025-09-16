@@ -2,8 +2,8 @@
 
 namespace iProtek\Pay\Helpers;
 
-use App\Helpers\AdminLTEHelper as DesignHelper;
-use App\Helpers\LanguageHelper;
+use iProtek\Pay\Helpers\AdminLTEHelper as DesignHelper;
+use iProtek\Pay\Helpers\LanguageHelper;
 
 class AdminLTEHelper
 {

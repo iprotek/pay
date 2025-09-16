@@ -10,7 +10,7 @@ class NotificationHelper
     
     public static function send($notifiable, $notification)
     { 
-        Queue::push(new \App\NotificationQueue\NotificationJob($notifiable, $notification));
+        Queue::push(new \iProtek\Pay\NotificationQueue\NotificationJob($notifiable, $notification));
     }
 
 }

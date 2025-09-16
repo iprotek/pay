@@ -2,8 +2,8 @@
 
 namespace iProtek\Pay\Helpers;
 
-use App\Helpers\AdminLTEHelper as DesignHelper;
-use App\Helpers\_TemplateFunctionHelper;
+use iProtek\Pay\Helpers\AdminLTEHelper as DesignHelper;
+use iProtek\Pay\Helpers\_TemplateFunctionHelper;
 
 class _TemplateHelper extends _TemplateFunctionHelper
 {
