@@ -7,6 +7,9 @@ use Laravel\Passport\Client;
 class ClientInfo extends Client
 { 
 
+    public $hidden = [
+        "plain_secret"
+    ];
 
     public function socket_info(){
         return $this->hasOne(MessageSocket::class, 'oauth_client_id');
