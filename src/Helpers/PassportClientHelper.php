@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Queue;
 use iProtek\Pay\Models\AppUser;
 use iProtek\Pay\Models\AppUserAccount;
 use Laravel\Passport\Client;
+use Illuminate\Support\Facades\Schema;
 
 class PassportClientHelper
 {
@@ -39,6 +40,36 @@ class PassportClientHelper
         }
 
         return["status"=>1, "message"=>"Application Valid"];
+
+    }
+
+    public static function oauth_fields(){
+
+        $user_id_col  = "";
+        $redirect_col = "";
+        
+        //USER ID COLUMN
+        if (Schema::hasColumn('oauth_clients', 'user_id')) {
+            $user_id_col = 'user_id';
+        }
+        else if(Schema::hasColumn('oauth_clients', 'owner_id')) {
+            $user_id_col = 'owner_id';
+        }
+
+        //
+        if (Schema::hasColumn('oauth_clients', 'redirect_uris')) {
+            $redirect_col = 'redirect_uris';
+        }
+        else if(Schema::hasColumn('oauth_clients', 'redirect')) {
+            $redirect_col = 'redirect';
+        }
+
+
+
+        return [
+            "user_id_column"=>$user_id_col,
+            "redirect_column"=>$redirect_col
+        ];
 
     }
 

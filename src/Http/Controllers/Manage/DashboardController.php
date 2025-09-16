@@ -13,14 +13,21 @@ use DB;
 use Laravel\Passport\Client;
 use iProtek\Pay\Models\ClientInfo;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Schema;
 
 class DashboardController extends _CommonController
 {
     //
     public $guard = 'admin';
+    public static $OauthFields = null;
+
+
+
     public function __construct()
     {
         $this->middleware('auth');
+        static::$OauthFields = \iProtek\Pay\Helpers\PassportClientHelper::oauth_fields();
+
     }
     public function index(Request $request){
 
@@ -30,22 +37,23 @@ class DashboardController extends _CommonController
     }
 
     public function passport_client_list(Request $request){
-        $user_id = auth()->user()->id;
-        $passport_clients = Client::where('user_id', $user_id);
+        $user_id = auth()->user()->id; 
+        $passport_clients = Client::where(static::$OauthFields["user_id_column"], $user_id); 
         $passport_clients->select('*', DB::raw(' fnIsClienthasPusher(id) as has_pusher ' ) );
         $passport_clients->orderBy('name','ASC');
-        $passport_clients->orderBy('id','DESC');
+        $passport_clients->orderBy('created_at','DESC');
         return $passport_clients->paginate(10);
     }
 
     public function get_client(Request $request, Client $id){
         $user_id = auth()->user()->id;
+        //return $id;
 
-        if($id->user_id == $user_id){            
+        if($id->{static::$OauthFields["user_id_column"]} == $user_id){            
 
             $client_info = ClientInfo::with(['socket_info'])->find($id->id);
 
-            $clientSecret = \DB::table('oauth_clients')->where('user_id', $user_id) ->where('id', $id->id)->first();
+            $clientSecret = \DB::table('oauth_clients')->where(static::$OauthFields["user_id_column"], $user_id) ->where('id', $id->id)->first();
             return [ "client"=> $client_info, "bearer"=> base64_encode($clientSecret->id.':'.$clientSecret->secret) ];
         }
 
@@ -55,7 +63,7 @@ class DashboardController extends _CommonController
     public function get_client_secret(Request $request, Client $id){
 
         $user_id = auth()->user()->id;
-        $clientSecret = \DB::table('oauth_clients')->where('user_id', $user_id)
+        $clientSecret = \DB::table('oauth_clients')->where(static::$OauthFields["user_id_column"], $user_id)
                 ->where('id', $id->id)
                 ->value('secret');
         if(!$clientSecret){
@@ -68,13 +76,13 @@ class DashboardController extends _CommonController
     public function add_client(Request $request){
         $this->validate($request,[
             "app_name"=>"required|string|min:8",
-            "redirect"=>"required",
+            //"redirect"=>"required",
             "socket_settings"=>"required"
         ]);
         
         $user_id = auth()->user()->id;
 
-        $client_exists = Client::where(['name'=> $request->app_name, 'user_id'=>$user_id, 'provider'=>'app_user_account'])->first();
+        $client_exists = Client::where(['name'=> $request->app_name, static::$OauthFields["user_id_column"]=>$user_id, 'provider'=>'app_user_account'])->first();
         if($client_exists){
             return ["status"=>0,"message"=>"App already exists."];
         }
@@ -98,11 +106,34 @@ class DashboardController extends _CommonController
         $client = new Client();
         
         //$client->user_id
-        $client->user_id = $user_id;
+        
+        $client->{static::$OauthFields["user_id_column"]} = $user_id;
         $client->name = $request->app_name; // This should be the applicaiton name.
-        $client->redirect = $request->redirect; // Optional, specify the callback URL for authorization code grant type
-        $client->personal_access_client = false; // Set to true if it's a personal access client
-        $client->password_client = true; // Set to true if it's a password grant client
+        $redirect_column = static::$OauthFields["redirect_column"];
+        if( $redirect_column == "redirect_uris"){
+            $client->{$redirect_column}  = [$request->redirect]; // Optional, specify the callback URL for authorization code grant type
+        }
+        else if( $redirect_column == "redirect" ){
+            $client->{$redirect_column}  = $request->redirect; // Optional, specify the callback URL for authorization code grant type
+        }
+
+
+        if (Schema::hasColumn('oauth_clients', 'personal_access_client')) {
+            $client->personal_access_client = false; // Set to true if it's a personal access client
+        }
+        
+        if (Schema::hasColumn('oauth_clients', 'password_client')) {
+            $client->password_client = true; // Set to true if it's a password grant client
+        }
+        else if(Schema::hasColumn('oauth_clients', 'grant_types')){
+            //authorization_code, password, client_credentials, refresh_token
+            $client->grant_types = ["password"];
+        }
+
+
+
+
+        
         $client->revoked = false; // Set to true to revoke the client
         $client->provider = 'app_user_account';
          
@@ -156,15 +187,16 @@ class DashboardController extends _CommonController
             }
         }
 
-        if($id->user_id == $user_id){
+        $redirect_column = static::$OauthFields["redirect_column"];
+        if($id->{static::$OauthFields["user_id_column"]} == $user_id){
             \DB::table('oauth_clients')->where('id','=', $id->id)->update([ 
                 "name"=>$request->app_name,
-                "redirect"=>$request->redirect,
+                $redirect_column => ($redirect_column == 'redirect_uris' ? [$request->redirect] : $request->redirect),
                 "revoked"=>$request->revoked,
                 "disable_api_allow_register_app_user_account"=>$request->disable_api_allow_register_app_user_account,
                 "disable_api_allow_share"=>$request->disable_api_allow_share,
                 "updated_at"=>\Carbon\Carbon::now()
-            ]); 
+            ]);
             
             $socket = \iProtek\Pay\Models\MessageSocket::where('oauth_client_id', $id->id)->first();
             if($socket_settings && !$socket){
