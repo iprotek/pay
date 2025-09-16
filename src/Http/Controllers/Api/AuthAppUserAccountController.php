@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Route;
 use Laravel\Passport\Client;
 use iProtek\Pay\Models\AppUserAccount; 
 use iProtek\Pay\Models\AppUserAccountGroup; 
+use Illuminate\Support\Facades\Log;
 
 class AuthAppUserAccountController extends _CommonController
 {
@@ -94,6 +95,7 @@ class AuthAppUserAccountController extends _CommonController
 
         $client = $request->get('client');
 
+        Log::error("GG".$client->plain_secret);
 
         $request = Request::create('/oauth/token', 'POST', [
             'grant_type' => 'password',

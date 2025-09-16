@@ -154,6 +154,9 @@ class DashboardController extends _CommonController
         $client->secret =  $clientSecretResult;
         /*IMPORTANT*/
         $client->save();
+        \DB::table('oauth_clients')->where('id','=', $client->id)->update([ 
+            "plain_secret"=>$clientSecretResult
+        ]);
 
         return ["status"=>1,"message"=>"Successfully Added","data_id"=>$client->id];
 
@@ -258,11 +261,12 @@ class DashboardController extends _CommonController
         
         $user_id = auth()->user()->id;
 
-        if($id->user_id == $user_id){
+        if($id->{static::$OauthFields["user_id_column"]} == $user_id){
             $client_secret = $this->randString($request);
             \DB::table('oauth_clients')->where('id','=', $id->id)->update([
-                "secret"=> $client_secret,
-                "updated_at"=>\Carbon\Carbon::now()
+                "secret"=> bcrypt( $client_secret ),
+                "updated_at"=>\Carbon\Carbon::now(),
+                "plain_secret"=>$client_secret
             ]);
          
             return ["status"=>1, "message"=>"Secret updated.", "client_secret"=>$client_secret, "bearer"=>base64_encode($id->id.':'.$client_secret) ];
