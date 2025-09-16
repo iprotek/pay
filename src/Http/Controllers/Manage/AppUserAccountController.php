@@ -13,6 +13,13 @@ class AppUserAccountController extends _CommonController
 {
     //
     public $guard = 'admin';
+    public static $OauthFields = null;
+    
+    public function __construct()
+    {
+        static::$OauthFields = \iProtek\Pay\Helpers\PassportClientHelper::oauth_fields();
+    }
+
     public function index(Request $request){        
         return $this->view('manage.customer.index');
     }
@@ -20,7 +27,7 @@ class AppUserAccountController extends _CommonController
     public function list(Request $request){
         $user_id = auth()->user()->id;
         $client_id = $request->client_id; 
-        $clients_req = Client::where('user_id', $user_id); 
+        $clients_req = Client::where(static::$OauthFields["user_id_column"], $user_id); 
         if($client_id > 0){
             $clients_req->where('id', $client_id);
         }
@@ -49,7 +56,7 @@ class AppUserAccountController extends _CommonController
     public function list_client_selection(Request $request){
         //User Admin
         $user_id = auth()->user()->id;
-        $clients = Client::where('user_id', $user_id);
+        $clients = Client::where(static::$OauthFields["user_id_column"], $user_id);
         if($request->search_text){
             $search_text = str_replace(' ', '%', $request->search_text);
             $clients->whereRaw('name like ?',['%'.$search_text.'%']);
@@ -64,7 +71,7 @@ class AppUserAccountController extends _CommonController
         $client_id = $request->client_id;
 
         //Check ownership
-        if($client_id->user_id != $user_id){
+        if($client_id->{static::$OauthFields["user_id_column"]} != $user_id){
             return response()->json(['error' => "Unauthorized"], 401);
         }
         
@@ -82,7 +89,7 @@ class AppUserAccountController extends _CommonController
         ]);
 
         $admin_user_id = auth()->user()->id;
-        if($client_id->user_id != $admin_user_id){
+        if($client_id->{static::$OauthFields["user_id_column"]} != $admin_user_id){
             return response()->json(['error'=>'Unauthorized'], 401);
         }
 
