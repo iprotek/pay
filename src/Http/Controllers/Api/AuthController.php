@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Route;
 use Laravel\Passport\Client;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\Log;
 
 class AuthController extends _CommonController
 {
@@ -69,7 +70,7 @@ class AuthController extends _CommonController
         $request = Request::create('/oauth/token', 'POST', [
             'grant_type' => 'password',
             'client_id' => $client->id,
-            'client_secret' =>   $client->secret,
+            'client_secret' =>  $client->plain_secret,
             'username' => $request->input('email'),
             'password' => $request->input('password'),
             'scope' => '',

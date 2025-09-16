@@ -85,7 +85,6 @@ class AppUserAccountInvitationController extends _CommonController
         
     }
 
-
     public function post_app_user_account_invitation(Request $request){ 
         
         $app_user_invitation = AppUserAccountInvitation::find($request->app_user_account_invitation_id);

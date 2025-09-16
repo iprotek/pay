@@ -39,8 +39,6 @@ class AppUserAccountRecoveryController extends _CommonController
         return ["status"=>1, "message"=>"Email recovery has been sent"];
     }
 
-
-
     public function post_app_user_account_recovery(Request $request){
 
         if($request->action_button == "REJECT"){

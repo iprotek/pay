@@ -96,7 +96,7 @@ class AuthAppUserAccountController extends _CommonController
         $client = $request->get('client');
 
         Log::error("GG".$client->plain_secret);
-
+        
         $request = Request::create('/oauth/token', 'POST', [
             'grant_type' => 'password',
             'client_id' => $client->id,

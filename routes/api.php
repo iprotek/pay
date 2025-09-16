@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 
 Route::prefix('api')->middleware('api')->name('api')->group(function(){ 
     
-    Route::post('/app-user-register', [AuthController::class, 'app_user_register'])->name('.app-user-login');
+    Route::post('/app-user-register', [AuthController::class, 'app_user_register'])->name('.app-user-register');
     
     //Route::middleware(['oauth.client'])->post('/login', [AuthController::class, 'app_user_login'])->name('.login');
     //Route::middleware('auth:api')->get('/user', function (Request $request) {
