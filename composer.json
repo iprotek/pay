@@ -10,8 +10,13 @@
     ],
     "autoload": {
         "psr-4": {
-            "iProtek\\Dbm\\": "src/"
+            "iProtek\\Pay\\": "src/"
         }
+    },
+    "scripts": {
+        "post-autoload-dump": [
+            "@php artisan vendor:publish --tag=public --force"
+        ]
     },
     "require": {
         "php": ">=7.0.0",
