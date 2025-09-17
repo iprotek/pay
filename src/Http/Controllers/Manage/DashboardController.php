@@ -263,13 +263,14 @@ class DashboardController extends _CommonController
 
         if($id->{static::$OauthFields["user_id_column"]} == $user_id){
             $client_secret = $this->randString($request);
+            $encrypted = bcrypt( $client_secret );
             \DB::table('oauth_clients')->where('id','=', $id->id)->update([
-                "secret"=> bcrypt( $client_secret ),
+                "secret"=> $encrypted,
                 "updated_at"=>\Carbon\Carbon::now(),
                 "plain_secret"=>$client_secret
             ]);
          
-            return ["status"=>1, "message"=>"Secret updated.", "client_secret"=>$client_secret, "bearer"=>base64_encode($id->id.':'.$client_secret) ];
+            return ["status"=>1, "message"=>"Secret updated.", "client_secret"=>$encrypted, "bearer"=>base64_encode($id->id.':'.$encrypted) ];
         }
 
         return ["status"=>0, "message"=>"Invalidated", "client_secret"=>null,"bearer"=>null];
