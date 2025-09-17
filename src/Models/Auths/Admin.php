@@ -72,12 +72,12 @@ class Admin extends Authenticatable implements MustVerifyEmail
     
     public function sendPasswordResetNotification($token)
     {
-        $this->notify(new \App\Notifications\AdminPasswordResetNotification($token, $this->email));
+        $this->notify(new \iProtek\Pay\Notifications\AdminPasswordResetNotification($token, $this->email));
     }
 
     
     public function sendEmailVerificationNotification()
     {
-        $this->notify(new \App\Notifications\AdminVerifyEmailNotification($this->email));
+        $this->notify(new \iProtek\Pay\Notifications\AdminVerifyEmailNotification($this->email));
     }
 }
