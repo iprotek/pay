@@ -31,7 +31,7 @@ return new class extends Migration
         CREATE FUNCTION `fnIsClienthasPusher`(_oauth_client_id VARCHAR(100)) RETURNS tinyint(1)
         BEGIN
             
-            IF EXISTS ( SELECT * FROM message_sockets WHERE oauth_client_id = _oauth_client_id AND is_active = 1 ) THEN
+            IF EXISTS ( SELECT * FROM message_sockets WHERE oauth_client_id COLLATE utf8mb4_unicode_ci = _oauth_client_id COLLATE utf8mb4_unicode_ci AND is_active = 1 ) THEN
 				RETURN 1;
             END IF;
             
