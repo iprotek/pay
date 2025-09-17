@@ -263,11 +263,12 @@ class DashboardController extends _CommonController
 
         if($id->{static::$OauthFields["user_id_column"]} == $user_id){
             $client_secret = $this->randString($request);
-            $encrypted = bcrypt( $client_secret );
+
+            //LET THE PASSPORT GENERATE ITS OWN
             $id->secret = $client_secret;
             $id->save();
+            
             \DB::table('oauth_clients')->where('id','=', $id->id)->update([
-                //"secret"=> $encrypted,
                 "updated_at"=>\Carbon\Carbon::now(),
                 "plain_secret"=>$client_secret
             ]);
