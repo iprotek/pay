@@ -32,11 +32,21 @@ class AuthAppUserAccountController extends _CommonController
         foreach($clients as $client){
             $client_ids[] = $client->id;
         }
+
         
         
         $user_accounts = \DB::table('app_user_accounts')
             ->whereIn('oauth_client_id', $client_ids)
             ->select('id', 'oauth_client_id', 'is_blocked', 'blocked_by', 'name', 'email', 'add_admin_user_by', 'add_app_user_by');
+        
+        
+        if($request->exact && trim($request->exact)){
+            $exact = trim($request->exact);
+            if(in_array($exact, ["name", "email"])){
+                $user_accounts->where($exact, $request->search);
+            }
+        }
+
         if($request->search){
             $search = '%'.str_replace(' ', '%', $request->search).'%';
             $user_accounts->whereRaw('CONCAT(name, email) LIKE ?', [$search]);
