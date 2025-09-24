@@ -223,10 +223,16 @@ class AuthController extends _CommonController
 
         $selectedColumns = array_diff($columns, $excludedColumns);
 
-        if( $user_limit ){
-           return  DB::table('app_user_accounts')->select($selectedColumns)->where('oauth_client_id', $client->id)->limit($user_limit)->get();
+        $app_user_accounts = DB::table('app_user_accounts')->select($selectedColumns);
+
+        if( $request->search && trim($request->search) && $request->exact == "email"){
+            $app_user_accounts->where( 'email', trim($request->search) );
         }
-        return DB::table('app_user_accounts')->select($selectedColumns)->where('oauth_client_id', $client->id)->get();
+
+        if( $user_limit ){
+           return  $app_user_accounts->where('oauth_client_id', $client->id)->limit($user_limit)->get();
+        }
+        return $app_user_accounts->where('oauth_client_id', $client->id)->get();
     }
 
     public function get_user_by_client(Request $request, $id){
