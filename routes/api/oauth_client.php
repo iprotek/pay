@@ -7,7 +7,7 @@ use iProtek\Pay\Http\Controllers\AppUserAccountRecoveryController;
 
 
 Route::middleware(['oauth.client'])->group(function(){        
-    Route::middleware(['throttle:3,1'])->post('/login',[AuthController::class, 'app_user_login'])->name('.login');
+    Route::middleware(['throttle:5,1'])->post('/login',[AuthController::class, 'app_user_login'])->name('.login');
 
     Route::get('/client-info',[AuthController::class, 'get_client_info'])->name('.client-info');
     
