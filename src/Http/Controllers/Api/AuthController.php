@@ -84,11 +84,13 @@ class AuthController extends _CommonController
         $status_code = $response->getStatusCode();
 
         //Intentional return for testing..
+        /*
         if($status_code != 200){
             Log::error(" Something goes wrong. $email and $password on $client->id = $client->plain_secret");
             return response()->json("Something goes wrong.", $status_code); 
         
         }
+            */
 
 
         return response()->json($result, $response->getStatusCode()); 
