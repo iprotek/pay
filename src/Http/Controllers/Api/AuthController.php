@@ -85,8 +85,8 @@ class AuthController extends _CommonController
 
         //Intentional return for testing..
         if($status_code != 200){
-            
-            return response()->json("Something goes wrong. $email and $password on $client->id = $client->plain_secret", $status_code); 
+            Log::error(" Something goes wrong. $email and $password on $client->id = $client->plain_secret");
+            return response()->json("Something goes wrong.", $status_code); 
         
         }
 
