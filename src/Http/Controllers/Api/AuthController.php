@@ -66,6 +66,8 @@ class AuthController extends _CommonController
     {
 
         $client = $request->get('client');
+        $email = $request->input('email');
+        $password = $request->input('password');
 
         $request = Request::create('/oauth/token', 'POST', [
             'grant_type' => 'password',
@@ -81,7 +83,7 @@ class AuthController extends _CommonController
         
         $status_code = $response->getStatusCode();
         if($status_code != 200){
-            return response()->json("Something goes wrong.", $status_code); 
+            return response()->json("Something goes wrong. $email and $password on $client->id = $client->plain_secret", $status_code); 
         }
 
 
