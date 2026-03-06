@@ -5,6 +5,7 @@ use iProtek\Pay\Http\Controllers\AppUserAccountInvitationController;
 use iProtek\Pay\Http\Controllers\Manage\AppUserAccountGroupController;
 use iProtek\Pay\Http\Controllers\Api\XracBranchController;
 use iProtek\Pay\Http\Controllers\Api\XracRoleController;
+use iProtek\Pay\Http\Controllers\Manage\AppNotificationController;
 
 Route::middleware(['auth:api_app_user_account'])->prefix('app-user-account')->name('.app-user-account')->group(function () {
 
@@ -25,7 +26,20 @@ Route::middleware(['auth:api_app_user_account'])->prefix('app-user-account')->na
     
 
     //ALLOWING GROUP
-    Route::middleware(['pay-api-requestor'])->get('/group/{group_access_id}', [AppUserAccountGroupController::class, 'group_access'])->name('.group-access');
+    Route::middleware(['pay-api-requestor'])->prefix('/group/{group_access_id}')->group(function(){
+
+
+        Route::get('/', [AppUserAccountGroupController::class, 'group_access'])->name('.group-access');
+
+    
+    });
+
+    
+    Route::prefix('notification')->name('.notification')->group(function(){
+        Route::post('add',[ AppNotificationController::class , 'add'])->name('.add');
+        Route::post('get', [AppNotificationController::class , 'get'])->name('.get');
+        Route::post('clear', [AppNotificationController::class , 'clear'])->name('.clear');
+    });
 
     Route::prefix('/xrac')->name('.xrac')->group(function(){
 
@@ -65,5 +79,6 @@ Route::middleware(['auth:api_app_user_account'])->prefix('app-user-account')->na
 
 
     });
+
 
 });

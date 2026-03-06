@@ -32,6 +32,7 @@ class _CommonController extends BaseController
              response()->json($validator->messages(), 403)->send();
             die();
         }
+        return $validator;
     }
     
     public function validator(Request $request, array $rules, $is_session = true){
