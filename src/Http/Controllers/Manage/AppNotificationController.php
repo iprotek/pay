@@ -14,12 +14,12 @@ class AppNotificationController extends _CommonController
 
         $reqData =  $this->validate($request, [
             "local_branch_id"=>"required|integer",
-            "local_system_name"=>"nullable",
             "pay_account_id"=>"required|integer"
         ])->validated();
 
         $reqData["domain"] = parse_url($request->header('SOURCE-URL'), PHP_URL_HOST);// $request->header('SOURCE-URL');
         $reqData["oauth_client_id"] = $request->header('CLIENT-ID');
+        $reqData["local_system_name"] = $request->header('SOURCE-TYPE');
 
         $appNotif = AppNotification::where($reqData)->first();
 
@@ -40,12 +40,12 @@ class AppNotificationController extends _CommonController
         
         $reqData =  $this->validate($request, [
             "local_branch_id"=>"required|integer",
-            "local_system_name"=>"nullable",
             "pay_account_id"=>"required|integer"
         ])->validated();
 
         $reqData["domain"] = parse_url($request->header('SOURCE-URL'), PHP_URL_HOST);
         $reqData["oauth_client_id"] = $request->header('CLIENT-ID');
+        $reqData["local_system_name"] = $request->header('SOURCE-TYPE');
 
         $appNotif = AppNotification::where($reqData)->first();
 
@@ -56,12 +56,12 @@ class AppNotificationController extends _CommonController
         
         $reqData =  $this->validate($request, [
             "local_branch_id"=>"required|integer",
-            "local_system_name"=>"nullable",
             "pay_account_id"=>"required|integer"
         ])->validated();
 
         $reqData["domain"] = parse_url($request->header('SOURCE-URL'), PHP_URL_HOST);
         $reqData["oauth_client_id"] = $request->header('CLIENT-ID');
+        $reqData["local_system_name"] = $request->header('SOURCE-TYPE');
 
         $appNotif = AppNotification::where($reqData)->whereRaw('notice_count > 0')->first();
         if($appNotif){
