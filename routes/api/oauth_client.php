@@ -4,6 +4,7 @@
 use iProtek\Pay\Http\Controllers\Api\AuthController;
 use iProtek\Pay\Http\Controllers\AppUserAccountRegistrationController;
 use iProtek\Pay\Http\Controllers\AppUserAccountRecoveryController;
+use iProtek\Pay\Http\Controllers\Manage\AppNotificationController;
 
 
 Route::middleware(['oauth.client'])->group(function(){        
@@ -22,5 +23,12 @@ Route::middleware(['oauth.client'])->group(function(){
 
     //SEND RECOVERY
     Route::post('/send-recovery', [AppUserAccountRecoveryController::class, 'send_recovery'])->name('.send-recovery');
+
+    
+    Route::prefix('notification')->name('.notification')->group(function(){
+        Route::post('add',[ AppNotificationController::class , 'add'])->name('.add');
+        Route::post('get', [AppNotificationController::class , 'get'])->name('.get');
+        Route::post('clear', [AppNotificationController::class , 'clear'])->name('.clear');
+    });
 
 });

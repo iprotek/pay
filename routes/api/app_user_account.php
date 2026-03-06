@@ -34,13 +34,6 @@ Route::middleware(['auth:api_app_user_account'])->prefix('app-user-account')->na
     
     });
 
-    
-    Route::prefix('notification')->name('.notification')->group(function(){
-        Route::post('add',[ AppNotificationController::class , 'add'])->name('.add');
-        Route::post('get', [AppNotificationController::class , 'get'])->name('.get');
-        Route::post('clear', [AppNotificationController::class , 'clear'])->name('.clear');
-    });
-
     Route::prefix('/xrac')->name('.xrac')->group(function(){
 
         //Branches
