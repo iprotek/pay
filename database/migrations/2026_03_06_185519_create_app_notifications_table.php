@@ -15,7 +15,7 @@ return new class extends Migration
             
             $table->bigIncrements('id');
             $table->string('domain');
-            $table->bigInteger('oauth_client_id');
+            $table->string('oauth_client_id');
             $table->timestamps();
 
             //
