@@ -127,7 +127,7 @@ class DashboardController extends _CommonController
         }
         else if(Schema::hasColumn('oauth_clients', 'grant_types')){
             //authorization_code, password, client_credentials, refresh_token
-            $client->grant_types = ["password"];
+            $client->grant_types = ["password", "refresh_token"];
         }
 
 
