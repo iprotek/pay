@@ -15,6 +15,7 @@ class XracDomain extends Model
         "local_system_id",
         "local_url",
 
-        "name"
+        "name",
+        "tenant_id"
     ];
 }

@@ -8,7 +8,12 @@ class ClientInfo extends Client
 { 
 
     public $hidden = [
-        "plain_secret"
+        "plain_secret",
+        "has_tenant"
+    ];
+
+    public $casts = [
+        "has_tenant"=>"boolean"
     ];
 
     public function socket_info(){

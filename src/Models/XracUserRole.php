@@ -20,7 +20,8 @@ class XracUserRole extends Model
 
         "is_default",
         "data",
-        "is_active"
+        "is_active",
+        "tenant_id"
     ];
     
 }

@@ -24,7 +24,8 @@ class XracRole extends Model
         "created_pay_user_account_id",
         "updated_pay_user_account_id",
         "deleted_pay_user_account_id",
-        "deleted_at"
+        "deleted_at",
+        "tenant_id"
     ];
     
     protected $casts = [
